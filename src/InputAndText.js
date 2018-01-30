@@ -30,9 +30,8 @@ class InputAndText extends Component {
         //for characters input [a-zA-Z] and whitspace
         if (charCode >= 65 && charCode <= 90 || charCode == 32) {
             this.setState((prevState,props)=>({
-                 inputVal: this.state.inputVal +e.key
+                 inputVal: prevState.inputVal +e.key
             }));
-            this.setState({ inputVal: this.state.inputVal + e.key })
         }
     };
 
