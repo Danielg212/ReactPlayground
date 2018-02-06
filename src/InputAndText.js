@@ -4,6 +4,8 @@ class InputAndText extends Component {
     constructor(props) {
         super(props);
         this.state = { inputVal: '' };
+        //need to bound the function! unless - we will get "undefined" scope params
+        // this.handleInput=this.handleInput.bind(this);
     }
 
     componentDidMount() {
@@ -12,33 +14,24 @@ class InputAndText extends Component {
 
     componentWillMount() {
         console.log("componentWillMount");
-        window.addEventListener('keydown', this.handleKeyboardInput.bind(this));
+        
     }
 
     componentWillUnmount() {
-        window.removeEventListener('keydown', this.keyboardInput);
+        window.removeEventListener('keydown', this.handleInput);
 
     }
-    handleKeyboardInput(e) {
-        console.log(this.state.inputVal);
-        const charCode = e.keyCode;
-        //for delete
-        if (charCode == 8) {
-            var str = this.state.inputVal.substring(0, this.state.inputVal.length - 1);
-            this.setState({ inputVal: str });
-        }
-        //for characters input [a-zA-Z] and whitspace
-        if (charCode >= 65 && charCode <= 90 || charCode == 32) {
-            this.setState((prevState,props)=>({
-                 inputVal: prevState.inputVal +e.key
-            }));
-        }
+    handleInput = (e) => {
+        console.log(e.target.value);
+        this.setState({inputVal: e.target.value});
+        
     };
 
 
 
     render() {
         return (<div>
+              <input type="text" value={this.state.inputVal} onChange={this.handleInput} />
             <p>you just typed: {this.state.inputVal} </p>
         </div>);
     }
